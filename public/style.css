@@ -155,6 +155,7 @@ body.single-card-mode .container {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     overflow: hidden;
     page-break-inside: avoid;
+    container-type: inline-size;
 }
 
 .value-invitados {
@@ -164,7 +165,7 @@ body.single-card-mode .container {
     /* Subido para quedar debajo del nuevo INVITADOS: */
     width: 45%;
     color: var(--text-dark);
-    font-size: 2.7vw;
+    font-size: 3.5cqi;
     font-weight: 800;
     line-height: 1.1;
 }
@@ -175,7 +176,7 @@ body.single-card-mode .container {
     top: 64%;
     /* Subido para quedar debajo del nuevo CUPO: */
     color: var(--text-dark);
-    font-size: 2.7vw;
+    font-size: 3.5cqi;
     font-weight: 800;
 }
 
@@ -204,16 +205,6 @@ body.single-card-mode .container {
         box-shadow: none;
         border-radius: 0;
         width: 100%;
-    }
-}
-
-@media (min-width: 1200px) {
-    .value-invitados {
-        font-size: 32px;
-    }
-
-    .value-cupo {
-        font-size: 32px;
     }
 }
 
