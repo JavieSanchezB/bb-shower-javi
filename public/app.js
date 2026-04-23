@@ -751,6 +751,24 @@ function renderRegistryTable() {
         if (item.regalo && item.regalo.trim() !== '') {
             tdRegalo.innerHTML = `<strong>🎁 ${item.regalo}</strong>`;
             tdRegalo.style.color = 'var(--primary-blue)';
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.innerHTML = '❌ Quitar';
+            removeBtn.className = 'btn';
+            removeBtn.style.backgroundColor = '#dc3545';
+            removeBtn.style.padding = '3px 8px';
+            removeBtn.style.fontSize = '0.75rem';
+            removeBtn.style.marginLeft = '15px';
+            removeBtn.title = "Quitar este regalo para que puedan escoger de nuevo";
+            removeBtn.onclick = () => {
+                if (confirm(`¿Seguro que deseas quitar el regalo de ${item.invitados}?`)) {
+                    item.regalo = "";
+                    item.referencia_url = "";
+                    guardarDatosBackend('/api/guardar-invitados', invitadosData, "Regalo removido con éxito.", "invitados.json");
+                    renderRegistryTable();
+                }
+            };
+            tdRegalo.appendChild(removeBtn);
         } else {
             tdRegalo.innerHTML = `<span style="color: #999; font-style: italic;">Sin asignar</span>`;
         }
