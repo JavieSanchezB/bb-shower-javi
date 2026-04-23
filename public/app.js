@@ -758,20 +758,26 @@ function renderRegistryTable() {
     const endIdx = startIdx + registryItemsPerPage;
     const displayData = invitadosData.slice(startIdx, endIdx);
 
-    displayData.forEach(item => {
-        const tr = document.createElement('tr');
-        tr.style.borderBottom = '1px solid #ddd';
+        displayData.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.style.borderBottom = '1px solid #ddd';
 
-        const tdNombre = document.createElement('td');
-        tdNombre.style.padding = '12px';
-        tdNombre.textContent = item.invitados;
+            const tdId = document.createElement('td');
+            tdId.style.padding = '12px';
+            tdId.style.fontWeight = 'bold';
+            tdId.style.color = '#666';
+            tdId.textContent = item.id;
 
-        const tdCupo = document.createElement('td');
-        tdCupo.style.padding = '12px';
-        tdCupo.textContent = item.cupo;
+            const tdNombre = document.createElement('td');
+            tdNombre.style.padding = '12px';
+            tdNombre.textContent = item.invitados;
 
-        const tdRegalo = document.createElement('td');
-        tdRegalo.style.padding = '12px';
+            const tdCupo = document.createElement('td');
+            tdCupo.style.padding = '12px';
+            tdCupo.textContent = item.cupo;
+
+            const tdRegalo = document.createElement('td');
+            tdRegalo.style.padding = '12px';
         
         if (item.regalo && item.regalo.trim() !== '') {
             tdRegalo.innerHTML = `<strong>🎁 ${item.regalo}</strong>`;
@@ -798,6 +804,7 @@ function renderRegistryTable() {
             tdRegalo.innerHTML = `<span style="color: #999; font-style: italic;">Sin asignar</span>`;
         }
         
+        tr.appendChild(tdId);
         tr.appendChild(tdNombre);
         tr.appendChild(tdCupo);
         tr.appendChild(tdRegalo);
