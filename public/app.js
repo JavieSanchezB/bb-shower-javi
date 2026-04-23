@@ -550,6 +550,11 @@ async function setupGiftModal() {
             container.innerHTML = '';
             const categorias = [...new Set(regalosSugeridos.map(r => r.categoria))];
             
+            // Collect all chosen gifts across all guests
+            const chosenGifts = invitadosData
+                .map(i => i.regalo)
+                .filter(r => r && r.trim() !== "");
+            
             categorias.forEach(cat => {
                 const section = document.createElement('div');
                 section.style.marginBottom = '25px';
@@ -596,17 +601,37 @@ async function setupGiftModal() {
                     name.style.color = 'var(--text-dark)';
                     
                     const btn = document.createElement('button');
-                    btn.textContent = 'Elegir';
-                    btn.className = 'btn';
-                    btn.style.width = '100%';
-                    btn.style.marginTop = '10px';
-                    btn.style.padding = '5px';
-                    btn.style.fontSize = '0.8rem';
+                    const isChosen = chosenGifts.includes(regalo.nombre);
                     
-                    card.onmouseenter = () => { card.style.transform = 'scale(1.05)'; card.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)'; };
-                    card.onmouseleave = () => { card.style.transform = 'scale(1)'; card.style.boxShadow = 'none'; };
-                    
-                    card.onclick = () => enviarRegalo(regalo.nombre, regalo.imagen, btn);
+                    if (isChosen) {
+                        btn.textContent = 'Ya Elegido';
+                        btn.className = 'btn';
+                        btn.style.width = '100%';
+                        btn.style.marginTop = '10px';
+                        btn.style.padding = '5px';
+                        btn.style.fontSize = '0.8rem';
+                        btn.style.backgroundColor = '#6c757d';
+                        btn.style.cursor = 'not-allowed';
+                        btn.disabled = true;
+                        
+                        card.style.opacity = '0.5';
+                        card.style.cursor = 'not-allowed';
+                        
+                        // Si era el regalo seleccionado por el Mismo invitado, podríamos dejar que diga "Tu selección"
+                        // Pero para mantenerlo simple, "Ya Elegido" está bien.
+                    } else {
+                        btn.textContent = 'Elegir';
+                        btn.className = 'btn';
+                        btn.style.width = '100%';
+                        btn.style.marginTop = '10px';
+                        btn.style.padding = '5px';
+                        btn.style.fontSize = '0.8rem';
+                        
+                        card.onmouseenter = () => { card.style.transform = 'scale(1.05)'; card.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)'; };
+                        card.onmouseleave = () => { card.style.transform = 'scale(1)'; card.style.boxShadow = 'none'; };
+                        
+                        card.onclick = () => enviarRegalo(regalo.nombre, regalo.imagen, btn);
+                    }
                     
                     card.appendChild(img);
                     card.appendChild(name);
