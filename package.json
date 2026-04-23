@@ -2,17 +2,8 @@
   "name": "invitacionesbbshower",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
-    "@libsql/client": "^0.17.2",
-    "dotenv": "^17.4.2"
+    "@libsql/client": "^0.14.0",
+    "dotenv": "^16.4.5"
   }
 }
