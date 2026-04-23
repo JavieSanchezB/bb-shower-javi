@@ -1,0 +1,138 @@
+{
+  "categoria": "Baby Shower Niño",
+  "regalos": [
+    {
+      "id": 1,
+      "nombre": "Pañales desechables",
+      "categoria": "Higiene",
+      "imagen": "https://unidrogas.vtexassets.com/arquivos/ids/372984-1200-auto?v=638891185468370000&width=1200&height=auto&aspect=true",
+      "alt": "Pañales para bebé"
+    },
+    {
+      "id": 2,
+      "nombre": "Toallitas húmedas",
+      "categoria": "Higiene",
+      "imagen": "https://source.unsplash.com/600x600/?baby,wipes",
+      "alt": "Toallitas húmedas para bebé"
+    },
+    {
+      "id": 3,
+      "nombre": "Ropa de bebé",
+      "categoria": "Ropa",
+      "imagen": "https://source.unsplash.com/600x600/?baby,clothes",
+      "alt": "Ropa de bebé niño"
+    },
+    {
+      "id": 4,
+      "nombre": "Cobija o manta",
+      "categoria": "Descanso",
+      "imagen": "https://source.unsplash.com/600x600/?baby,blanket",
+      "alt": "Manta para bebé"
+    },
+    {
+      "id": 5,
+      "nombre": "Biberón",
+      "categoria": "Alimentación",
+      "imagen": "https://source.unsplash.com/600x600/?baby,bottle",
+      "alt": "Biberón para bebé"
+    },
+    {
+      "id": 6,
+      "nombre": "Chupo",
+      "categoria": "Alimentación",
+      "imagen": "https://source.unsplash.com/600x600/?baby,pacifier",
+      "alt": "Chupo o chupón de bebé"
+    },
+    {
+      "id": 7,
+      "nombre": "Cambiador portátil",
+      "categoria": "Higiene",
+      "imagen": "https://source.unsplash.com/600x600/?baby,changing",
+      "alt": "Cambiador para bebé"
+    },
+    {
+      "id": 8,
+      "nombre": "Termómetro digital",
+      "categoria": "Salud",
+      "imagen": "https://source.unsplash.com/600x600/?thermometer,baby",
+      "alt": "Termómetro digital para bebé"
+    },
+    {
+      "id": 9,
+      "nombre": "Kit de aseo",
+      "categoria": "Higiene",
+      "imagen": "https://source.unsplash.com/600x600/?baby,care,kit",
+      "alt": "Kit de aseo para bebé"
+    },
+    {
+      "id": 10,
+      "nombre": "Bañera para bebé",
+      "categoria": "Higiene",
+      "imagen": "https://source.unsplash.com/600x600/?baby,bath",
+      "alt": "Bañera para bebé"
+    },
+    {
+      "id": 11,
+      "nombre": "Shampoo y jabón",
+      "categoria": "Higiene",
+      "imagen": "https://source.unsplash.com/600x600/?baby,shampoo",
+      "alt": "Productos de baño para bebé"
+    },
+    {
+      "id": 12,
+      "nombre": "Crema antipañalitis",
+      "categoria": "Salud",
+      "imagen": "https://source.unsplash.com/600x600/?baby,cream",
+      "alt": "Crema para bebé"
+    },
+    {
+      "id": 13,
+      "nombre": "Pañalera",
+      "categoria": "Accesorios",
+      "imagen": "https://source.unsplash.com/600x600/?diaper,bag",
+      "alt": "Bolso pañalera"
+    },
+    {
+      "id": 14,
+      "nombre": "Sonajero o juguete",
+      "categoria": "Juguetes",
+      "imagen": "https://source.unsplash.com/600x600/?baby,toy",
+      "alt": "Juguete para bebé"
+    },
+    {
+      "id": 15,
+      "nombre": "Silla mecedora",
+      "categoria": "Descanso",
+      "imagen": "https://source.unsplash.com/600x600/?baby,bouncer",
+      "alt": "Silla mecedora para bebé"
+    },
+    {
+      "id": 16,
+      "nombre": "Cuna o corral",
+      "categoria": "Descanso",
+      "imagen": "https://source.unsplash.com/600x600/?baby,crib",
+      "alt": "Cuna para bebé"
+    },
+    {
+      "id": 17,
+      "nombre": "Almohada de lactancia",
+      "categoria": "Alimentación",
+      "imagen": "https://source.unsplash.com/600x600/?nursing,pillow",
+      "alt": "Almohada de lactancia"
+    },
+    {
+      "id": 18,
+      "nombre": "Baberos",
+      "categoria": "Ropa",
+      "imagen": "https://source.unsplash.com/600x600/?baby,bib",
+      "alt": "Baberos para bebé"
+    },
+    {
+      "id": 19,
+      "nombre": "Set de platos y cucharas",
+      "categoria": "Alimentación",
+      "imagen": "https://source.unsplash.com/600x600/?baby,feeding",
+      "alt": "Set de alimentación para bebé"
+    }
+  ]
+}

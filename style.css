@@ -1,0 +1,314 @@
+:root {
+    --text-dark: #3a3f47;
+    /* Color del nombre de invitados */
+    --accent-blue: #225a9c;
+    --primary-blue: #1b3d6d;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f4f7f6;
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.page-header h1 {
+    color: var(--primary-blue);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.actions-header {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    background-color: var(--accent-blue);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: var(--primary-blue);
+}
+
+#copy-feedback {
+    display: none;
+    color: green;
+    font-weight: bold;
+    margin-top: 0.5rem;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 100%;
+    max-width: 1000px;
+}
+
+/* Modo de visualización individual ocupa toda la pantalla de forma bonita */
+body.single-card-mode {
+    padding: 0;
+    background-color: #e6ebf1;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+body.single-card-mode .page-header {
+    display: none;
+}
+
+body.single-card-mode .container {
+    max-width: 900px;
+    padding: 1rem;
+}
+
+.card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 2rem;
+    font-weight: bold;
+    color: var(--primary-blue);
+}
+
+.pagination button {
+    background-color: var(--accent-blue);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-weight: bold;
+}
+
+.pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.copy-link-btn {
+    background-color: #e0e7ee;
+    color: var(--primary-blue);
+    border: 1px solid var(--accent-blue);
+    padding: 5px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.copy-link-btn:hover {
+    background-color: var(--accent-blue);
+    color: white;
+}
+
+.card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10.6;
+    background-image: url('base_tarjeta.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    page-break-inside: avoid;
+}
+
+.value-invitados {
+    position: absolute;
+    left: 10%;
+    top: 47%;
+    /* Subido para quedar debajo del nuevo INVITADOS: */
+    width: 45%;
+    color: var(--text-dark);
+    font-size: 2.7vw;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.value-cupo {
+    position: absolute;
+    left: 11%;
+    top: 64%;
+    /* Subido para quedar debajo del nuevo CUPO: */
+    color: var(--text-dark);
+    font-size: 2.7vw;
+    font-weight: 800;
+}
+
+@media print {
+    body {
+        background-color: white;
+        padding: 0;
+    }
+
+    .page-header,
+    .card-actions {
+        display: none !important;
+    }
+
+    .container {
+        gap: 0;
+        max-width: none;
+    }
+
+    .card-wrapper {
+        margin-bottom: 2cm;
+        page-break-after: always;
+    }
+
+    .card {
+        box-shadow: none;
+        border-radius: 0;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .value-invitados {
+        font-size: 32px;
+    }
+
+    .value-cupo {
+        font-size: 32px;
+    }
+}
+
+/* --- ESTILOS DEL BOTÓN DE REGALO SUGERIDO --- */
+@keyframes floatAndPulse {
+    0% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 5px 15px rgba(34, 90, 156, 0.3);
+    }
+
+    50% {
+        transform: translateY(-8px) scale(1.05);
+        box-shadow: 0 15px 25px rgba(34, 90, 156, 0.6), 0 0 15px rgba(255, 255, 255, 0.8);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 5px 15px rgba(34, 90, 156, 0.3);
+    }
+}
+
+.gift-button-container {
+    display: none;
+    justify-content: center;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+body.single-card-mode .gift-button-container {
+    display: flex;
+}
+
+.gift-btn {
+    background: linear-gradient(135deg, #1b3d6d, #4287d6);
+    color: white;
+    font-size: 1.5rem;
+    padding: 15px 35px;
+    border: 3px solid #ffffff;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    transition: all 0.3s ease;
+    animation: floatAndPulse 2.5s infinite ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.gift-btn span {
+    font-size: 2rem;
+}
+
+/* Modal del Regalo */
+.gift-modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    position: relative;
+    border: 4px solid var(--accent-blue);
+    background-image: url('data:image/svg+xml;utf8,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="2" fill="%23225a9c" opacity="0.1"/></svg>');
+}
+
+.gift-modal-content h3 {
+    color: var(--primary-blue);
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.gift-modal-content p {
+    color: var(--text-dark);
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.gift-modal-content .close-gift-btn {
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    transition: background-color 0.3s;
+}
+
+.gift-modal-content .close-gift-btn:hover {
+    background-color: var(--accent-blue);
+}
