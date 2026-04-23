@@ -161,7 +161,7 @@ body.single-card-mode .container {
 .value-invitados {
     position: absolute;
     left: 10%;
-    top: 47%;
+    top: 50%;
     /* Subido para quedar debajo del nuevo INVITADOS: */
     width: 45%;
     color: var(--text-dark);
