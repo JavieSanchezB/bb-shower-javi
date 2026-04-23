@@ -9,21 +9,32 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="page-header">
-        <h1>Generador de Invitaciones - Baby Shower</h1>
-        <div class="actions-header">
-            <button id="add-new-btn" class="btn" style="background-color: #007bff;">➕ Agregar Nueva</button>
-            <button id="edit-catalog-btn" class="btn" style="background-color: #f39c12;">🎨 Editar Catálogo</button>
-            <button id="view-registry-btn" class="btn" style="background-color: #17a2b8;">📋 Lista de Regalos</button>
-            <button id="print-btn" class="btn" onclick="handlePrint()">🖨️ Imprimir Todas</button>
-            <button id="download-json-btn" class="btn" style="background-color: #28a745;">💾 Descargar Modificaciones</button>
-        </div>
-        <div id="copy-feedback">¡Enlace copiado al portapapeles!</div>
-    </header>
-
-    <div id="invitations-container" class="container">
-        <!-- Las tarjetas se generarán aquí con JavaScript -->
+    <!-- Pantalla de Login -->
+    <div id="login-container" style="display: none; max-width: 400px; margin: 100px auto; padding: 30px; background: white; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; font-family: 'Nunito', sans-serif;">
+        <h2 style="color: var(--primary-blue); margin-bottom: 20px;">Acceso Administrador</h2>
+        <input type="text" id="login-user" placeholder="Usuario" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;">
+        <input type="password" id="login-pass" placeholder="Contraseña" style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;">
+        <button id="login-btn" class="btn" style="width: 100%; background-color: var(--primary-blue);">Ingresar</button>
+        <p id="login-error" style="color: red; margin-top: 15px; display: none;">Credenciales incorrectas.</p>
     </div>
+
+    <!-- Contenedor Principal de la App (Oculto inicialmente si requiere login) -->
+    <div id="app-container" style="display: none;">
+        <header class="page-header" id="admin-header">
+            <h1>Generador de Invitaciones - Baby Shower</h1>
+            <div class="actions-header">
+                <button id="add-new-btn" class="btn" style="background-color: #007bff;">➕ Agregar Nueva</button>
+                <button id="edit-catalog-btn" class="btn" style="background-color: #f39c12;">🎨 Editar Catálogo</button>
+                <button id="view-registry-btn" class="btn" style="background-color: #17a2b8;">📋 Lista de Regalos</button>
+                <button id="print-btn" class="btn" onclick="handlePrint()">🖨️ Imprimir Todas</button>
+                <button id="download-json-btn" class="btn" style="background-color: #28a745;">💾 Descargar Modificaciones</button>
+            </div>
+            <div id="copy-feedback">¡Enlace copiado al portapapeles!</div>
+        </header>
+
+        <div id="invitations-container" class="container">
+            <!-- Las tarjetas se generarán aquí con JavaScript -->
+        </div>
     
     <div class="gift-button-container">
         <button id="show-gift-btn" class="gift-btn">
@@ -136,6 +147,7 @@
         </div>
     </div>
 
+    </div>
     <script src="app.js"></script>
 </body>
 </html>

@@ -13,8 +13,40 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         invitadosData = await response.json();
         
-        // Render initial state
-        renderInvitations();
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetId = urlParams.get('id');
+        const loginContainer = document.getElementById('login-container');
+        const appContainer = document.getElementById('app-container');
+
+        if (targetId !== null) {
+            // Modo invitado: Mostrar directamente la tarjeta
+            appContainer.style.display = 'block';
+            const adminHeader = document.getElementById('admin-header');
+            if(adminHeader) adminHeader.style.display = 'none';
+            
+            const guestGift = document.getElementById('guest-gift-section');
+            if(guestGift) guestGift.style.display = 'block';
+            
+            renderInvitations();
+        } else {
+            // Modo Administrador: Solicitar Login
+            loginContainer.style.display = 'block';
+            
+            const loginBtn = document.getElementById('login-btn');
+            if (loginBtn) {
+                loginBtn.onclick = () => {
+                    const user = document.getElementById('login-user').value;
+                    const pass = document.getElementById('login-pass').value;
+                    if (user === 'brika' && pass === 'Horus2126') {
+                        loginContainer.style.display = 'none';
+                        appContainer.style.display = 'block';
+                        renderInvitations();
+                    } else {
+                        document.getElementById('login-error').style.display = 'block';
+                    }
+                };
+            }
+        }
         
         setupModalEvents();
         setupDownloadEvent();
