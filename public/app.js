@@ -284,6 +284,140 @@ function setupModalEvents() {
     
     let currentCatalog = { regalos: [] };
     
+    function renderCatalogEditor() {
+        const container = document.getElementById('catalog-list-container');
+        container.innerHTML = '';
+        
+        if (!currentCatalog.regalos) currentCatalog.regalos = [];
+        
+        const categories = [...new Set(currentCatalog.regalos.map(r => r.categoria))];
+        
+        categories.forEach(cat => {
+            const section = document.createElement('div');
+            section.style.marginBottom = '25px';
+            section.style.padding = '15px';
+            section.style.border = '1px solid #ddd';
+            section.style.borderRadius = '8px';
+            section.style.backgroundColor = '#f9f9f9';
+            
+            const titleContainer = document.createElement('div');
+            titleContainer.style.display = 'flex';
+            titleContainer.style.justifyContent = 'space-between';
+            titleContainer.style.alignItems = 'center';
+            titleContainer.style.marginBottom = '15px';
+            
+            const title = document.createElement('h3');
+            title.textContent = cat || "Sin Categoría";
+            title.style.margin = '0';
+            title.style.color = 'var(--primary-blue)';
+            
+            titleContainer.appendChild(title);
+            section.appendChild(titleContainer);
+            
+            const regalosCat = currentCatalog.regalos.filter(r => r.categoria === cat);
+            
+            regalosCat.forEach(regalo => {
+                const realIndex = currentCatalog.regalos.indexOf(regalo);
+                const box = document.createElement('div');
+                box.style.border = '1px solid #ccc';
+                box.style.padding = '10px';
+                box.style.borderRadius = '6px';
+                box.style.marginBottom = '10px';
+                box.style.backgroundColor = 'white';
+                
+                const nameLabel = document.createElement('label');
+                nameLabel.textContent = 'Nombre del Producto:';
+                nameLabel.style.display = 'block';
+                nameLabel.style.fontSize = '0.9rem';
+                nameLabel.style.marginBottom = '5px';
+                
+                const nameInput = document.createElement('input');
+                nameInput.type = 'text';
+                nameInput.className = 'catalog-name-input';
+                nameInput.setAttribute('data-index', realIndex);
+                nameInput.value = regalo.nombre || "";
+                nameInput.style.width = '100%';
+                nameInput.style.padding = '6px';
+                nameInput.style.marginBottom = '10px';
+                nameInput.style.border = '1px solid #aaa';
+                nameInput.style.borderRadius = '4px';
+                
+                const urlLabel = document.createElement('label');
+                urlLabel.textContent = 'URL de la Imagen:';
+                urlLabel.style.display = 'block';
+                urlLabel.style.fontSize = '0.9rem';
+                urlLabel.style.marginBottom = '5px';
+                
+                const urlInput = document.createElement('input');
+                urlInput.type = 'text';
+                urlInput.className = 'catalog-url-input';
+                urlInput.setAttribute('data-index', realIndex);
+                urlInput.value = regalo.imagen || "";
+                urlInput.style.width = '100%';
+                urlInput.style.padding = '6px';
+                urlInput.style.marginBottom = '10px';
+                urlInput.style.border = '1px solid #aaa';
+                urlInput.style.borderRadius = '4px';
+                
+                const delBtn = document.createElement('button');
+                delBtn.textContent = '❌ Eliminar';
+                delBtn.className = 'btn';
+                delBtn.style.backgroundColor = '#dc3545';
+                delBtn.style.padding = '5px 10px';
+                delBtn.style.fontSize = '0.8rem';
+                delBtn.onclick = () => {
+                    syncCatalogInputs();
+                    currentCatalog.regalos.splice(realIndex, 1);
+                    renderCatalogEditor();
+                };
+                
+                box.appendChild(nameLabel);
+                box.appendChild(nameInput);
+                box.appendChild(urlLabel);
+                box.appendChild(urlInput);
+                box.appendChild(delBtn);
+                section.appendChild(box);
+            });
+            
+            const addProdBtn = document.createElement('button');
+            addProdBtn.textContent = '➕ Agregar Producto';
+            addProdBtn.className = 'btn';
+            addProdBtn.style.backgroundColor = '#28a745';
+            addProdBtn.style.padding = '5px 10px';
+            addProdBtn.style.fontSize = '0.8rem';
+            addProdBtn.style.marginTop = '10px';
+            addProdBtn.onclick = () => {
+                syncCatalogInputs();
+                const newId = currentCatalog.regalos.length > 0 ? Math.max(...currentCatalog.regalos.map(r => r.id)) + 1 : 1;
+                currentCatalog.regalos.push({
+                    id: newId,
+                    categoria: cat,
+                    nombre: "Nuevo Producto",
+                    imagen: "",
+                    alt: "Regalo"
+                });
+                renderCatalogEditor();
+            };
+            
+            section.appendChild(addProdBtn);
+            container.appendChild(section);
+        });
+    }
+
+    function syncCatalogInputs() {
+        const nameInputs = document.querySelectorAll('.catalog-name-input');
+        nameInputs.forEach(input => {
+            const idx = input.getAttribute('data-index');
+            if(currentCatalog.regalos[idx]) currentCatalog.regalos[idx].nombre = input.value;
+        });
+        
+        const urlInputs = document.querySelectorAll('.catalog-url-input');
+        urlInputs.forEach(input => {
+            const idx = input.getAttribute('data-index');
+            if(currentCatalog.regalos[idx]) currentCatalog.regalos[idx].imagen = input.value;
+        });
+    }
+
     if (editCatalogBtn) {
         editCatalogBtn.onclick = async () => {
             try {
@@ -294,58 +428,35 @@ function setupModalEvents() {
             } catch (e) {
                 console.error("Error cargando catálogo", e);
             }
-            
-            const container = document.getElementById('catalog-list-container');
-            container.innerHTML = '';
-            
-            if (currentCatalog.regalos) {
-                currentCatalog.regalos.forEach((regalo, index) => {
-                    const box = document.createElement('div');
-                    box.style.border = '1px solid #ccc';
-                    box.style.padding = '10px';
-                    box.style.borderRadius = '6px';
-                    
-                    const header = document.createElement('h4');
-                    header.textContent = regalo.nombre;
-                    header.style.marginBottom = '10px';
-                    
-                    const urlLabel = document.createElement('label');
-                    urlLabel.textContent = 'URL de la Imagen:';
-                    urlLabel.style.display = 'block';
-                    urlLabel.style.fontSize = '0.9rem';
-                    urlLabel.style.marginBottom = '5px';
-                    
-                    const urlInput = document.createElement('input');
-                    urlInput.type = 'text';
-                    urlInput.className = 'catalog-url-input';
-                    urlInput.setAttribute('data-index', index);
-                    urlInput.value = regalo.imagen || "";
-                    urlInput.style.width = '100%';
-                    urlInput.style.padding = '6px';
-                    urlInput.style.border = '1px solid #aaa';
-                    urlInput.style.borderRadius = '4px';
-                    
-                    box.appendChild(header);
-                    box.appendChild(urlLabel);
-                    box.appendChild(urlInput);
-                    container.appendChild(box);
-                });
-            }
+            renderCatalogEditor();
             catalogModal.style.display = 'flex';
+        };
+    }
+    
+    const addCatBtn = document.getElementById('add-category-btn');
+    if (addCatBtn) {
+        addCatBtn.onclick = () => {
+            const newCat = prompt("Nombre de la nueva categoría:");
+            if (newCat && newCat.trim() !== '') {
+                syncCatalogInputs();
+                const newId = currentCatalog.regalos.length > 0 ? Math.max(...currentCatalog.regalos.map(r => r.id)) + 1 : 1;
+                currentCatalog.regalos.push({
+                    id: newId,
+                    categoria: newCat.trim(),
+                    nombre: "Nuevo Producto",
+                    imagen: "",
+                    alt: "Regalo"
+                });
+                renderCatalogEditor();
+            }
         };
     }
     
     if (cancelCatalogBtn) cancelCatalogBtn.onclick = () => catalogModal.style.display = 'none';
     
     if (saveCatalogBtn) saveCatalogBtn.onclick = () => {
-        // Recoger todo activamente para no perder data de tipeos no blureados
-        const inputs = document.querySelectorAll('.catalog-url-input');
-        inputs.forEach(input => {
-            const idx = input.getAttribute('data-index');
-            currentCatalog.regalos[idx].imagen = input.value;
-        });
-
-        // Guardado real-time al backend
+        syncCatalogInputs();
+        currentCatalog.regalos = currentCatalog.regalos.filter(r => r.nombre.trim() !== '');
         guardarDatosBackend('/api/guardar-catalogo', currentCatalog, "Catálogo guardado en tiempo real.", "regalos.json");
         catalogModal.style.display = 'none';
     };
