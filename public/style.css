@@ -146,7 +146,7 @@ body.single-card-mode .container {
 .card {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 10.6;
+    aspect-ratio: 1484 / 1060;
     background-image: url('base_tarjeta.png');
     background-size: cover;
     background-position: center;
