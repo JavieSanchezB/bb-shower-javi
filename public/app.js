@@ -825,10 +825,49 @@ function renderRegistryTable() {
             tdRegalo.innerHTML = `<span style="color: #999; font-style: italic;">Sin asignar</span>`;
         }
         
+        const tdEnviado = document.createElement('td');
+        tdEnviado.style.padding = '12px';
+        tdEnviado.style.textAlign = 'center';
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = !!item.enviado;
+        checkbox.style.transform = 'scale(1.5)';
+        checkbox.style.cursor = 'pointer';
+        checkbox.onchange = () => {
+            item.enviado = checkbox.checked;
+            guardarDatosBackend('/api/guardar-invitados', invitadosData, "Estado de envío actualizado", "invitados.json");
+        };
+        tdEnviado.appendChild(checkbox);
+
+        const tdAcciones = document.createElement('td');
+        tdAcciones.style.padding = '12px';
+        tdAcciones.style.textAlign = 'center';
+        const copyBtn = document.createElement('button');
+        copyBtn.textContent = '📋 Copiar Link';
+        copyBtn.className = 'btn';
+        copyBtn.style.padding = '4px 8px';
+        copyBtn.style.fontSize = '0.8rem';
+        copyBtn.style.backgroundColor = '#17a2b8';
+        copyBtn.onclick = () => {
+            const link = `${window.location.origin}${window.location.pathname}?id=${item.id}`;
+            navigator.clipboard.writeText(link).then(() => {
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '✅ Copiado!';
+                copyBtn.style.backgroundColor = '#28a745';
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                    copyBtn.style.backgroundColor = '#17a2b8';
+                }, 2000);
+            });
+        };
+        tdAcciones.appendChild(copyBtn);
+        
         tr.appendChild(tdId);
         tr.appendChild(tdNombre);
         tr.appendChild(tdCupo);
         tr.appendChild(tdRegalo);
+        tr.appendChild(tdEnviado);
+        tr.appendChild(tdAcciones);
         tbody.appendChild(tr);
     });
 
