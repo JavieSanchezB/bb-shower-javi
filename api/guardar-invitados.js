@@ -12,8 +12,8 @@ module.exports = async (req, res) => {
         
         for (const i of invitados) {
             stmts.push({
-                sql: 'INSERT INTO invitados (id, invitados, cupo, regalo, referencia_url) VALUES (?, ?, ?, ?, ?)',
-                args: [i.id, i.invitados, i.cupo, i.regalo || '', i.referencia_url || '']
+                sql: 'INSERT INTO invitados (id, invitados, cupo, regalo, referencia_url, enviado) VALUES (?, ?, ?, ?, ?, ?)',
+                args: [i.id, i.invitados, i.cupo, i.regalo || '', i.referencia_url || '', i.enviado ? 1 : 0]
             });
         }
         

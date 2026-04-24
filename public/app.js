@@ -113,6 +113,9 @@ function renderInvitations() {
         // Tarjeta
         const card = document.createElement('div');
         card.className = 'card';
+        if (Math.random() > 0.5) {
+            card.classList.add('rotar-bg');
+        }
         
         // Valor INVITADOS (Nombre)
         const invitadosValue = document.createElement('div');

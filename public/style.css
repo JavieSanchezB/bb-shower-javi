@@ -158,6 +158,10 @@ body.single-card-mode .container {
     container-type: inline-size;
 }
 
+.card.rotar-bg {
+    background-image: url('base_tarjeta_rotar.png');
+}
+
 .value-invitados {
     position: absolute;
     left: 10%;
