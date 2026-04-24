@@ -41,9 +41,12 @@
             <p style="font-size: 1.2rem; margin: 5px 0;"><strong>📍 Lugar:</strong> Parque Heredia, Conjunto Malibú – Salón social</p>
         </div>
     
-    <div class="gift-button-container">
+    <div class="gift-button-container" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
         <button id="show-gift-btn" class="gift-btn">
             <span>🎁</span> Regalo Sugerido
+        </button>
+        <button id="show-envelope-btn" class="gift-btn envelope-btn">
+            <span>💌</span> Lluvia de Sobres
         </button>
     </div>
     
@@ -78,6 +81,35 @@
                 <p>Tu elección de regalo ha sido registrada exitosamente. ¡Nos vemos en el Baby Shower!</p>
                 <button id="close-success-btn" class="close-gift-btn" style="margin-top:20px;">Cerrar Ventana</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal Lluvia de Sobres -->
+    <div id="envelope-modal-overlay" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
+        <div class="gift-modal-content envelope-modal-box" style="max-width: 500px; text-align: center; padding: 40px 20px;">
+            <h3 style="color: var(--primary-blue); font-size: 2rem; margin-bottom: 10px;">Lluvia de Sobres 💌</h3>
+            <p style="font-size: 1.1rem; color: var(--text-dark); margin-bottom: 20px;">
+                El mejor regalo es tu presencia.<br>
+                Pero si deseas hacernos un detalle adicional, contaremos con un buzón para lluvia de sobres el día de nuestro Baby Shower. ¡Muchas gracias!
+            </p>
+            
+            <div class="envelope-wrapper">
+                <div class="envelope-heart h1">❤️</div>
+                <div class="envelope-heart h2">💙</div>
+                <div class="envelope-heart h3">💖</div>
+                <div class="envelope-heart h4">💕</div>
+                <div class="envelope-heart h5">🍼</div>
+                
+                <div class="envelope-base">
+                    <div class="envelope-back"></div>
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-front-left"></div>
+                    <div class="envelope-front-right"></div>
+                    <div class="envelope-front-bottom"></div>
+                </div>
+            </div>
+
+            <button id="close-envelope-btn" class="close-gift-btn" style="margin-top: 30px;">Cerrar Ventana</button>
         </div>
     </div>
 

@@ -303,3 +303,103 @@ body.single-card-mode .gift-button-container {
 .gift-modal-content .close-gift-btn:hover {
     background-color: var(--accent-blue);
 }
+
+/* --- Lluvia de Sobres Button & Animation --- */
+.envelope-btn {
+    background: linear-gradient(135deg, #f39c12, #f1c40f);
+}
+
+.envelope-wrapper {
+    position: relative;
+    width: 200px;
+    height: 150px;
+    margin: 40px auto 20px auto;
+    cursor: pointer;
+}
+
+.envelope-base {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border: 2px solid #e2e8f0;
+    overflow: hidden;
+}
+
+.envelope-back {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #e2e8f0;
+    z-index: 1;
+}
+
+.envelope-flap {
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 0;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-top: 80px solid #cbd5e1;
+    z-index: 4;
+    transform-origin: top;
+    transition: transform 0.6s ease-in-out;
+}
+
+.envelope-wrapper:hover .envelope-flap,
+.envelope-modal-box:hover .envelope-flap {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.envelope-front-left {
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 0;
+    border-top: 75px solid transparent;
+    border-bottom: 75px solid transparent;
+    border-left: 100px solid #f1f5f9;
+    z-index: 3;
+}
+
+.envelope-front-right {
+    position: absolute;
+    top: 0; right: 0;
+    width: 0; height: 0;
+    border-top: 75px solid transparent;
+    border-bottom: 75px solid transparent;
+    border-right: 100px solid #f1f5f9;
+    z-index: 3;
+}
+
+.envelope-front-bottom {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 0;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid #f8f9fa;
+    z-index: 3;
+}
+
+.envelope-heart {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5rem;
+    opacity: 0;
+    z-index: 2; /* behind front parts, above back */
+}
+
+@keyframes flyUp1 { 0% { transform: translate(-50%, 0) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(-100%, -120px) scale(1.2) rotate(-20deg); opacity: 0; } }
+@keyframes flyUp2 { 0% { transform: translate(-50%, 0) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(10%, -140px) scale(1) rotate(20deg); opacity: 0; } }
+@keyframes flyUp3 { 0% { transform: translate(-50%, 0) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(-50%, -160px) scale(1.5) rotate(0deg); opacity: 0; } }
+@keyframes flyUp4 { 0% { transform: translate(-50%, 0) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(50%, -110px) scale(0.8) rotate(45deg); opacity: 0; } }
+@keyframes flyUp5 { 0% { transform: translate(-50%, 0) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(-120%, -90px) scale(1.1) rotate(-45deg); opacity: 0; } }
+
+.envelope-wrapper:hover .h1, .envelope-modal-box:hover .h1 { animation: flyUp1 2s infinite; animation-delay: 0s; }
+.envelope-wrapper:hover .h2, .envelope-modal-box:hover .h2 { animation: flyUp2 2.5s infinite; animation-delay: 0.3s; }
+.envelope-wrapper:hover .h3, .envelope-modal-box:hover .h3 { animation: flyUp3 2.2s infinite; animation-delay: 0.6s; }
+.envelope-wrapper:hover .h4, .envelope-modal-box:hover .h4 { animation: flyUp4 2.8s infinite; animation-delay: 0.9s; }
+.envelope-wrapper:hover .h5, .envelope-modal-box:hover .h5 { animation: flyUp5 2.1s infinite; animation-delay: 1.2s; }

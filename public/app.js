@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         setupModalEvents();
         setupDownloadEvent();
         setupGiftModal();
+        setupEnvelopeModal();
         setupRegistryReports();
         
         // Listen to after print event to re-render paginated version
@@ -517,6 +518,26 @@ function setupDownloadEvent() {
            descargarJsonRespaldo(invitadosData, "invitados_respaldo.json");
            alert("Se ha descargado un respaldo de la base de datos.");
         };
+    }
+}
+
+function setupEnvelopeModal() {
+    const envelopeBtn = document.getElementById('show-envelope-btn');
+    const envelopeModal = document.getElementById('envelope-modal-overlay');
+    const closeEnvelopeBtn = document.getElementById('close-envelope-btn');
+
+    if (envelopeBtn && envelopeModal) {
+        envelopeBtn.onclick = () => {
+            envelopeModal.style.display = 'flex';
+        };
+
+        if (closeEnvelopeBtn) {
+            closeEnvelopeBtn.onclick = () => envelopeModal.style.display = 'none';
+        }
+
+        envelopeModal.addEventListener('click', (e) => {
+            if (e.target === envelopeModal) envelopeModal.style.display = 'none';
+        });
     }
 }
 
