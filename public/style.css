@@ -308,6 +308,34 @@ body.single-card-mode .gift-button-container {
     background-color: var(--accent-blue);
 }
 
+.chosen-gift-image-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.chosen-gift-image {
+    width: 170px;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 3px solid #ffffff;
+    box-shadow: 0 10px 24px rgba(34, 90, 156, 0.35);
+    animation: chosenGiftPop 0.6s ease, chosenGiftFloat 2.2s ease-in-out infinite;
+}
+
+@keyframes chosenGiftPop {
+    0% { transform: scale(0.7); opacity: 0; }
+    70% { transform: scale(1.08); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes chosenGiftFloat {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
+}
+
 /* --- Lluvia de Sobres Button & Animation --- */
 .envelope-btn {
     background: linear-gradient(135deg, #f39c12, #f1c40f);

@@ -8,7 +8,7 @@
     <!-- Usamos una fuente de Google parecida a la imagen (Nunito es buena para lectura redondeada) -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,700;0,800;1,700;1,800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260503a">
 </head>
 
 <body>
@@ -84,8 +84,11 @@
 
                 <div id="gift-modal-already-chosen" style="display:none; text-align: center; padding: 30px 10px;">
                     <p style="font-size:4rem; margin: 0 0 10px 0;">💖</p>
-                    <h3 style="color:var(--primary-blue);">¡Ya registraste tu regalo!</h3>
-                    <p>Anteriormente seleccionaste que nos obsequiarás:</p>
+                    <h3 id="chosen-gift-title" style="color:var(--primary-blue);">¡Ya registraste tu regalo!</h3>
+                    <p>Ya escogiste este regalo para el bebe:</p>
+                    <div class="chosen-gift-image-wrapper">
+                        <img id="chosen-gift-image" class="chosen-gift-image" src="" alt="Regalo escogido" style="display:none;">
+                    </div>
                     <div id="chosen-gift-display"
                         style="font-size:1.5rem; font-weight:bold; color:var(--text-dark); margin:20px 0; padding:15px; background:#f0f8ff; border-radius:8px; border:2px dashed var(--accent-blue);">
                     </div>
@@ -233,7 +236,7 @@
         </div>
 
     </div>
-    <script src="app.js"></script>
+    <script src="app.js?v=20260503a"></script>
 </body>
 
 </html>

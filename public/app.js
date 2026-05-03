@@ -554,7 +554,9 @@ async function setupGiftModal() {
     const selectionDiv = document.getElementById('gift-modal-selection');
     const successDiv = document.getElementById('gift-modal-success');
     const alreadyChosenDiv = document.getElementById('gift-modal-already-chosen');
+    const chosenTitle = document.getElementById('chosen-gift-title');
     const chosenDisplay = document.getElementById('chosen-gift-display');
+    const chosenImage = document.getElementById('chosen-gift-image');
     
     if(giftBtn && giftModal) {
         
@@ -668,16 +670,40 @@ async function setupGiftModal() {
             });
         }
         
+        function mostrarRegaloEscogido(nombreRegalo, imagenRegalo, titleText) {
+            if (chosenDisplay) chosenDisplay.textContent = nombreRegalo || '';
+
+            if (chosenTitle) {
+                chosenTitle.textContent = titleText || '¡Ya registraste tu regalo!';
+            }
+
+            if (chosenImage) {
+                if (imagenRegalo && imagenRegalo.trim() !== '') {
+                    chosenImage.src = imagenRegalo;
+                    chosenImage.style.display = 'block';
+                    chosenImage.classList.remove('chosen-gift-image');
+                    void chosenImage.offsetWidth;
+                    chosenImage.classList.add('chosen-gift-image');
+                } else {
+                    chosenImage.style.display = 'none';
+                    chosenImage.removeAttribute('src');
+                }
+            }
+
+            selectionDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            alreadyChosenDiv.style.display = 'block';
+        }
+
         giftBtn.onclick = () => {
             const urlParams = new URLSearchParams(window.location.search);
             const targetId = urlParams.get('id');
             const currentGuest = invitadosData.find(i => i.id.toString() === targetId);
 
             if (currentGuest && currentGuest.regalo && currentGuest.regalo.trim() !== "") {
-                selectionDiv.style.display = 'none';
-                successDiv.style.display = 'none';
-                alreadyChosenDiv.style.display = 'block';
-                chosenDisplay.textContent = currentGuest.regalo;
+                const regaloCatalogo = regalosSugeridos.find(r => r.nombre === currentGuest.regalo);
+                const imagenGuardada = currentGuest.referencia_url || (regaloCatalogo ? regaloCatalogo.imagen : '');
+                mostrarRegaloEscogido(currentGuest.regalo, imagenGuardada, '¡Ya escogiste tu regalo!');
                 giftModal.style.display = 'flex';
             } else {
                 selectionDiv.style.display = 'block';
@@ -734,9 +760,7 @@ async function setupGiftModal() {
             }
             
             // SIEMPRE mostramos éxito al usuario gane o pierda el backend (tolerancia a Vercel y npx)
-            selectionDiv.style.display = 'none';
-            successDiv.style.display = 'block';
-            alreadyChosenDiv.style.display = 'none';
+            mostrarRegaloEscogido(regaloStr, imagenUrl || '', '¡Ya escogiste tu regalo!');
         }
     }
 }
