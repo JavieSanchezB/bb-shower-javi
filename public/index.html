@@ -8,7 +8,7 @@
     <!-- Usamos una fuente de Google parecida a la imagen (Nunito es buena para lectura redondeada) -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,700;0,800;1,700;1,800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20260503a">
+    <link rel="stylesheet" href="style.css?v=20260517b">
 </head>
 
 <body>
@@ -57,6 +57,9 @@
             <button id="show-gift-btn" class="gift-btn">
                 <span>🎁</span> Regalo Sugerido
             </button>
+            <button id="show-attendance-btn" class="gift-btn attendance-btn">
+                <span>✅</span> Confirmar Asistencia
+            </button>
             <button id="show-envelope-btn" class="gift-btn envelope-btn">
                 <span>💌</span> Lluvia de Sobres
             </button>
@@ -104,6 +107,35 @@
                     <button id="close-success-btn" class="close-gift-btn" style="margin-top:20px;">Cerrar
                         Ventana</button>
                 </div>
+            </div>
+        </div>
+
+        <div id="attendance-modal-overlay"
+            style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
+            <div class="gift-modal-content attendance-modal-box"
+                style="max-width: 550px; text-align: center; padding: 35px 20px;">
+                <div id="attendance-modal-selection">
+                    <p style="font-size:4rem; margin: 0 0 5px 0;">💙</p>
+                    <h3 style="color: var(--primary-blue); margin-bottom: 10px;">Confirma tu asistencia</h3>
+                    <p style="margin-bottom: 15px;">
+                        Nos llenaria el corazon compartir este momento contigo.
+                        Tu presencia seria un regalo muy especial para nuestro bebe.
+                    </p>
+                    <p style="font-size: 1rem; margin-bottom: 20px;"><strong>Recuerda:</strong> 23 de mayo, 5:00 p. m. - Parque Heredia, Conjunto Malibu - Salon social.</p>
+                    <div style="display:flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                        <button id="attend-yes-btn" class="btn" style="background-color:#28a745; min-width: 160px;">Si, asistire</button>
+                        <button id="attend-no-btn" class="btn" style="background-color:#dc3545; min-width: 160px;">No asistire</button>
+                    </div>
+                </div>
+
+                <div id="attendance-modal-success" style="display:none; text-align: center; padding: 25px 10px;">
+                    <p style="font-size:4rem; margin: 0 0 10px 0;">🥰</p>
+                    <h3 id="attendance-title" style="color:var(--primary-blue);">Gracias por confirmar</h3>
+                    <p id="attendance-message" style="margin-bottom: 20px;"></p>
+                    <div id="attendance-status-badge" style="font-size:1.1rem; font-weight:bold; margin: 12px auto; padding: 10px 16px; border-radius: 999px; display: inline-block;"></div>
+                </div>
+
+                <button id="close-attendance-btn" class="close-gift-btn" style="margin-top:20px;">Cerrar Ventana</button>
             </div>
         </div>
 
@@ -221,6 +253,7 @@
                             <th style="padding: 12px; text-align: left;">Familia / Nombre</th>
                             <th style="padding: 12px; text-align: left;">Cupo</th>
                             <th style="padding: 12px; text-align: left;">Regalo Seleccionado</th>
+                            <th style="padding: 12px; text-align: center;">Asistencia</th>
                             <th style="padding: 12px; text-align: center;">Enviado</th>
                             <th style="padding: 12px; text-align: center; border-radius: 0 8px 0 0;">Acciones</th>
                         </tr>
@@ -236,7 +269,7 @@
         </div>
 
     </div>
-    <script src="app.js?v=20260503a"></script>
+    <script src="app.js?v=20260517b"></script>
 </body>
 
 </html>

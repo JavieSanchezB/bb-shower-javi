@@ -14,12 +14,19 @@ module.exports = async (req, res) => {
                 cupo INTEGER NOT NULL,
                 regalo TEXT,
                 referencia_url TEXT,
-                enviado BOOLEAN DEFAULT 0
+                enviado BOOLEAN DEFAULT 0,
+                asistencia TEXT DEFAULT ''
             )
         `);
         
         try {
             await db.execute('ALTER TABLE invitados ADD COLUMN enviado BOOLEAN DEFAULT 0');
+        } catch (e) {
+            // Ignorar el error si la columna ya existe
+        }
+
+        try {
+            await db.execute("ALTER TABLE invitados ADD COLUMN asistencia TEXT DEFAULT ''");
         } catch (e) {
             // Ignorar el error si la columna ya existe
         }
@@ -45,8 +52,8 @@ module.exports = async (req, res) => {
                 const stmts = [];
                 for (const i of invitados) {
                     stmts.push({
-                        sql: 'INSERT INTO invitados (id, invitados, cupo, regalo, referencia_url, enviado) VALUES (?, ?, ?, ?, ?, ?)',
-                        args: [i.id, i.invitados, i.cupo, i.regalo || '', i.referencia_url || '', i.enviado ? 1 : 0]
+                        sql: 'INSERT INTO invitados (id, invitados, cupo, regalo, referencia_url, enviado, asistencia) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                        args: [i.id, i.invitados, i.cupo, i.regalo || '', i.referencia_url || '', i.enviado ? 1 : 0, i.asistencia || '']
                     });
                 }
                 if (stmts.length > 0) {

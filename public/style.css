@@ -341,6 +341,14 @@ body.single-card-mode .gift-button-container {
     background: linear-gradient(135deg, #f39c12, #f1c40f);
 }
 
+.attendance-btn {
+    background: linear-gradient(135deg, #1f8a66, #37b27f);
+}
+
+.attendance-modal-box {
+    border-color: #1f8a66;
+}
+
 .envelope-wrapper {
     position: relative;
     width: 200px;

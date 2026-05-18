@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         setupModalEvents();
         setupDownloadEvent();
         setupGiftModal();
+        setupAttendanceModal();
         setupEnvelopeModal();
         setupRegistryReports();
         
@@ -258,12 +259,15 @@ function setupModalEvents() {
             return;
         }
         
+        const oldData = indexToEdit >= 0 ? invitadosData[indexToEdit] : null;
         const newData = {
             id: parseInt(newId, 10),
             invitados: newNombres,
             cupo: parseInt(newCupo, 10),
             regalo: newRegalo,
-            referencia_url: newRefUrl
+            referencia_url: newRefUrl,
+            enviado: oldData ? !!oldData.enviado : false,
+            asistencia: oldData && oldData.asistencia ? oldData.asistencia : ''
         };
 
         if (indexToEdit === -1) {
@@ -765,6 +769,127 @@ async function setupGiftModal() {
     }
 }
 
+function setupAttendanceModal() {
+    const attendanceBtn = document.getElementById('show-attendance-btn');
+    const attendanceModal = document.getElementById('attendance-modal-overlay');
+    const closeAttendanceBtn = document.getElementById('close-attendance-btn');
+    const yesBtn = document.getElementById('attend-yes-btn');
+    const noBtn = document.getElementById('attend-no-btn');
+    const selectionDiv = document.getElementById('attendance-modal-selection');
+    const successDiv = document.getElementById('attendance-modal-success');
+    const titleEl = document.getElementById('attendance-title');
+    const messageEl = document.getElementById('attendance-message');
+    const badgeEl = document.getElementById('attendance-status-badge');
+
+    if (!attendanceBtn || !attendanceModal) return;
+
+    function getCurrentGuest() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetId = urlParams.get('id');
+        if (!targetId) return null;
+        return invitadosData.find(i => i.id.toString() === targetId) || null;
+    }
+
+    function paintStatus(status) {
+        if (!badgeEl || !messageEl || !titleEl) return;
+
+        if (status === 'asiste') {
+            titleEl.textContent = 'Que alegria tenerte con nosotros';
+            messageEl.textContent = 'Gracias por confirmar tu asistencia. Estamos felices de compartir este dia tan especial contigo y nuestro bebe.';
+            badgeEl.textContent = 'Asistencia confirmada: ASISTE';
+            badgeEl.style.background = '#e6f7ef';
+            badgeEl.style.color = '#1f8a66';
+        } else {
+            titleEl.textContent = 'Gracias por confirmarnos';
+            messageEl.textContent = 'Gracias por avisarnos con carino. Te vamos a extrañar y esperamos verte muy pronto para celebrar juntos.';
+            badgeEl.textContent = 'Estado registrado: NO ASISTE';
+            badgeEl.style.background = '#fdecec';
+            badgeEl.style.color = '#b02a37';
+        }
+    }
+
+    function hasConfirmedAttendance(guest) {
+        if (!guest || !guest.asistencia) return false;
+        const status = guest.asistencia.toLowerCase();
+        return status === 'asiste' || status === 'no asiste';
+    }
+
+    function setCloseAvailability(canClose) {
+        if (!closeAttendanceBtn) return;
+        closeAttendanceBtn.style.display = canClose ? 'inline-block' : 'none';
+    }
+
+    function showSelection() {
+        selectionDiv.style.display = 'block';
+        successDiv.style.display = 'none';
+    }
+
+    function showSuccess(status) {
+        paintStatus(status);
+        selectionDiv.style.display = 'none';
+        successDiv.style.display = 'block';
+    }
+
+    attendanceBtn.onclick = () => {
+        const guest = getCurrentGuest();
+        if (hasConfirmedAttendance(guest)) {
+            showSuccess(guest.asistencia);
+            setCloseAvailability(true);
+        } else {
+            showSelection();
+            setCloseAvailability(false);
+        }
+        attendanceModal.style.display = 'flex';
+    };
+
+    async function guardarAsistencia(status, clickedBtn) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetId = urlParams.get('id');
+        if (!targetId) return;
+
+        const originalText = clickedBtn.textContent;
+        clickedBtn.textContent = 'Guardando...';
+        clickedBtn.disabled = true;
+
+        const payload = { id: targetId, asistencia: status };
+        const gIndex = invitadosData.findIndex(i => i.id.toString() === targetId);
+        if (gIndex !== -1) invitadosData[gIndex].asistencia = status;
+
+        try {
+            await fetch('/api/guardar-asistencia', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+        } catch (e) {
+            console.warn('No se pudo persistir asistencia en backend.', e);
+        }
+
+        clickedBtn.textContent = originalText;
+        clickedBtn.disabled = false;
+        showSuccess(status);
+        setCloseAvailability(true);
+    }
+
+    if (yesBtn) yesBtn.onclick = () => guardarAsistencia('asiste', yesBtn);
+    if (noBtn) noBtn.onclick = () => guardarAsistencia('no asiste', noBtn);
+    if (closeAttendanceBtn) closeAttendanceBtn.onclick = () => attendanceModal.style.display = 'none';
+
+    attendanceModal.addEventListener('click', (e) => {
+        const guest = getCurrentGuest();
+        if (e.target === attendanceModal && hasConfirmedAttendance(guest)) {
+            attendanceModal.style.display = 'none';
+        }
+    });
+
+    const currentGuest = getCurrentGuest();
+    if (currentGuest && !hasConfirmedAttendance(currentGuest)) {
+        showSelection();
+        setCloseAvailability(false);
+        attendanceModal.style.display = 'flex';
+    }
+}
+
 // -------------------------------------------------------------
 // REPORTES Y LISTA DE REGALOS (ADMIN)
 // -------------------------------------------------------------
@@ -824,8 +949,8 @@ function renderRegistryTable() {
             tdCupo.style.padding = '12px';
             tdCupo.textContent = item.cupo;
 
-            const tdRegalo = document.createElement('td');
-            tdRegalo.style.padding = '12px';
+        const tdRegalo = document.createElement('td');
+        tdRegalo.style.padding = '12px';
         
         if (item.regalo && item.regalo.trim() !== '') {
             tdRegalo.innerHTML = `<strong>🎁 ${item.regalo}</strong>`;
@@ -850,6 +975,18 @@ function renderRegistryTable() {
             tdRegalo.appendChild(removeBtn);
         } else {
             tdRegalo.innerHTML = `<span style="color: #999; font-style: italic;">Sin asignar</span>`;
+        }
+
+        const tdAsistencia = document.createElement('td');
+        tdAsistencia.style.padding = '12px';
+        tdAsistencia.style.textAlign = 'center';
+        const asistenciaVal = (item.asistencia || '').toLowerCase();
+        if (asistenciaVal === 'asiste') {
+            tdAsistencia.innerHTML = '<span style="font-weight:bold; color:#1f8a66;">Asiste</span>';
+        } else if (asistenciaVal === 'no asiste') {
+            tdAsistencia.innerHTML = '<span style="font-weight:bold; color:#b02a37;">No asiste</span>';
+        } else {
+            tdAsistencia.innerHTML = '<span style="color:#999; font-style:italic;">Sin confirmar</span>';
         }
         
         const tdEnviado = document.createElement('td');
@@ -893,6 +1030,7 @@ function renderRegistryTable() {
         tr.appendChild(tdNombre);
         tr.appendChild(tdCupo);
         tr.appendChild(tdRegalo);
+        tr.appendChild(tdAsistencia);
         tr.appendChild(tdEnviado);
         tr.appendChild(tdAcciones);
         tbody.appendChild(tr);
